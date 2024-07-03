@@ -28,5 +28,5 @@ jobs:
 
     - name: Terraform Execution
       if: ${{ env.TF_VERBOSE != '' }}
-      uses: ./actions/terraform-action
+      uses: ./EKS/
 
