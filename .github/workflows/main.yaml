@@ -23,7 +23,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: EKS/checkout@v3
+      uses: actions/checkout@v3
 
     - name: Set up Terraform
       uses: hashicorp/setup-terraform@v2
@@ -43,35 +43,35 @@ jobs:
         echo "AWS_SECRET_ACCESS_KEY: $AWS_SECRET_ACCESS_KEY"
 
     - name: Terraform Init
-      run: terraform init
+      run: terraform init -chdir=EKS
       continue-on-error: true
 
     - name: Terraform Validate
-      run: terraform validate
+      run: terraform validate -chdir=EKS
       continue-on-error: true
 
     - name: Terraform Plan
-      run: terraform plan -out=plan.tfplan
+      run: terraform plan -out=plan.tfplan -chdir=EKS
       continue-on-error: true
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/modules'
-      run: terraform apply -auto-approve plan.tfplan
+      run: terraform apply -auto-approve plan.tfplan -chdir=EKS
       continue-on-error: true
 
     - name: Debug - Check Terraform Version
       run: terraform --version
 
     - name: Debug - Output Terraform Init Log
-      run: terraform init -no-color
+      run: terraform init -no-color -chdir=EKS
 
     - name: Debug - Output Terraform Validate Log
-      run: terraform validate -no-color
+      run: terraform validate -no-color -chdir=EKS
 
     - name: Debug - Output Terraform Plan Log
-      run: terraform plan -no-color -out=plan.tfplan
+      run: terraform plan -no-color -out=plan.tfplan -chdir=EKS
 
     - name: Debug - Output Terraform Apply Log
       if: github.ref == 'refs/heads/modules'
-      run: terraform apply -no-color -auto-approve plan.tfplan
+      run: terraform apply -no-color -auto-approve plan.tfplan -chdir=EKS
 
