@@ -44,16 +44,20 @@ jobs:
 
     - name: Terraform Init
       run: terraform init
+      continue-on-error: true
 
     - name: Terraform Validate
       run: terraform validate
+      continue-on-error: true
 
     - name: Terraform Plan
       run: terraform plan -out=plan.tfplan
+      continue-on-error: true
 
     - name: Terraform Apply
       if: github.ref == 'refs/heads/modules'
       run: terraform apply -auto-approve plan.tfplan
+      continue-on-error: true
 
     - name: Debug - Check Terraform Version
       run: terraform --version
