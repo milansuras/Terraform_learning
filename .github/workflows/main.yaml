@@ -28,7 +28,7 @@ jobs:
 
       - name: Terraform Format
         id: fmt
-        working-directory: terraform
+        working-directory: ./EKS
         run: terraform fmt -check
 
       - name: Terraform Init
